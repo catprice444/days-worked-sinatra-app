@@ -1,4 +1,4 @@
-class CreateWorkdays < ActiveRecord::Migration[6.0]
+class CreateWorkdays < ActiveRecord::Migration
   def change
     create_table :workdays do |t|
       t.integer :user_id
