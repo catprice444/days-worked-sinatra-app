@@ -4,7 +4,7 @@ class UserController < ApplicationController
         if !logged_in?
             flash[:login] = "Please enter your username and password"
             erb :'user/login'
-        else 
+        else
             redirect to "/workdays"
         end 
     end 
@@ -33,10 +33,15 @@ class UserController < ApplicationController
             flash[:error] = "Both fields are required to sign up"
             redirect to "/signup"
         else 
-            @user = User.new(:username => params[:username], :password => params[:password])
-            @user.save
-            session[:user_id] = @user.id
-            redirect to "/workdays"
+            if @user && @user.authenticate(params[:username])
+                @user = User.new(:username => params[:username], :password => params[:password])
+                @user.save
+                session[:user_id] = @user.id
+                redirect to "/workdays" 
+            else
+                flash[:error] = "Username has already been taken, please choose another one"
+                redirect to "/signup"
+            end    
         end 
     end 
 

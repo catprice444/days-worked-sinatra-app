@@ -3,14 +3,7 @@ class User < ActiveRecord::Base
     has_many :workdays
 
 
-    validates_uniqueness_of :username
-    
-    def slug
-      username.downcase.gsub(" ","-")
-    end 
+    validates :username, :presence => true, :uniqueness => true
   
-    def self.find_by_slug(slug)
-      User.all.find{|user| user.slug == slug}
-    end 
     
   end
