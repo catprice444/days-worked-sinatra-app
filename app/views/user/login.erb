@@ -1,5 +1,7 @@
 <h1>Login</h1>
 
+<p class="flash message"><%= flash[:login] %></p>
+
 <form action="/login" method="post">
     <h3>Username:<input type="text" name="username"></h3>
     <h3>Password:<input type="text" name="password"></h3>

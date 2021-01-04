@@ -1,4 +1,5 @@
 require './config/environment'
+require 'sinatra/flash'
 
 class ApplicationController < Sinatra::Base
 
@@ -6,10 +7,12 @@ class ApplicationController < Sinatra::Base
     set :public_folder, 'public'
     set :views, 'app/views'
     enable :sessions
+    register Sinatra::Flash
 		set :session_secret, "hand_banana"
   end
 
   get "/" do
+    
     erb :index
   end
 

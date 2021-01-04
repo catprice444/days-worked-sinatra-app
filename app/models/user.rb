@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
     has_secure_password
     has_many :workdays
-  
+
+
+    validates_uniqueness_of :username
+    
     def slug
       username.downcase.gsub(" ","-")
     end 
