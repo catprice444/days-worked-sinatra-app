@@ -19,6 +19,8 @@ class WorkdayController < ApplicationController
 
     post "/workdays" do 
         @workday = Workday.new(:shift_start => params[:shift_start], :shift_end => params[:shift_end], :notes => params[:notes])
+        @workday.user_id = current_user.id
+        @workday.save
         redirect to "/workdays/#{@workday.id}"
     end 
 
