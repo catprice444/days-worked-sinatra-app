@@ -22,11 +22,6 @@ class ApplicationController < Sinatra::Base
 
     def logged_in?
       !!session[:user_id]
-    end 
-
-    def self.authenticate(params)
-      user = User.find_by_name(params[:username])
-      (user && user.password == params[:password]) ? user : nil
     end
 
     

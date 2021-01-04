@@ -32,16 +32,14 @@ class UserController < ApplicationController
         if params[:username] == "" || params[:password] == ""
             flash[:error] = "Both fields are required to sign up"
             redirect to "/signup"
-        else 
-            if @user && @user.authenticate(params[:username])
-                @user = User.new(:username => params[:username], :password => params[:password])
-                @user.save
-                session[:user_id] = @user.id
-                redirect to "/workdays" 
-            else
-                flash[:error] = "Username has already been taken, please choose another one"
-                redirect to "/signup"
-            end    
+        else
+            @user = User.new(:username => params[:username], :password => params[:password])
+            @user.save
+            session[:user_id] = @user.id
+            redirect to "/workdays" 
+        # else    
+        #     flash[:error] = "Username has already been taken, please choose another one"
+        #     redirect to "/signup"  
         end 
     end 
 
