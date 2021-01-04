@@ -1,9 +1,15 @@
 <h1>Workday: <%= @workday.id %></h1>
+<br>
+</br>
 
-<h3><%= @workday.notes %></h3>
-<h3><%= @workday.shift_start %></h3>
-<h3><time><%= @workday.shift_start_time.hour %></time></h3>
-<h3><%= @workday.shift_end %></h3>
-<h3><time><%= @workday.shift_end_time %></time></h3>
+<h3><u>Notes:</u> <%= @workday.notes %></h3>
+<br>
+<h3><u>Shift Start:</u> <%= @workday.shift_start %> @ <%= @workday.shift_start_time %></h3>
+<br>
+<h3><u>Shift End:</u> <%= @workday.shift_end %> @ <%= @workday.shift_end_time %></h3>
 
-<a href="/workdays/<%= @workday.id %>/edit">Edit Workday</a>
+
+<br>
+</br>
+
+<a href="/workdays/<%= @workday.id %>/edit">Edit</a>
