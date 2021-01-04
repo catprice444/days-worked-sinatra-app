@@ -3,18 +3,17 @@
 <h2>All Workdays </h2>
 <% @workdays.each do |w| %>
     <ul>
-    <li><%= w.shift_start %></li>
+    <li><a href="/workdays/<%= w.id %>"> <%= w.notes %> </a> </li>
     </ul>
 <% end %>
 
 <br>
 </br>
 
-<a href="/workdays/new">Enter a new workday</a>
+<h3><a href="/workdays/new">Enter a new workday</a></h3>
 
-<br>
-</br>
-<a href="/logout">Logout</a>
+
+<h4><a href="/logout">Logout</a></h4>
 
 <p class="error-message"><%= flash[:error] %></p>
 
