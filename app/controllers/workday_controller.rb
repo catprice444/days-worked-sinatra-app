@@ -18,23 +18,34 @@ class WorkdayController < ApplicationController
     end 
 
     post "/workdays" do 
-        @workday = Workday.new(:shift_start => params[:shift_start], :shift_end => params[:shift_end], 
-        :shift_start_time => params[:shift_start_time], :shift_end_time => params[:shift_end_time], :notes => params[:notes])
-        @workday.user_id = current_user.id
-        @workday.save
-        redirect to "/workdays/#{@workday.id}"
+        if current_user.nil?
+            flash[:error] = "Please login or sign up"
+            redirect to "/login"
+
+        elseif params[:shift_start] == "" || params[:shift_start_time] == "" || params[:shift_end] == "" || params[:shift_end_time] == ""
+            flash[:error] = "Fill in all fields to submit form"
+            redirect to "/workdays/new"
+
+        else 
+            @workday = Workday.new(:shift_start => params[:shift_start], :shift_end => params[:shift_end], 
+                :shift_start_time => params[:shift_start_time], :shift_end_time => params[:shift_end_time], :notes => params[:notes])
+            @workday.user_id = current_user.id
+            @workday.save
+            redirect to "/workdays/#{@workday.id}"
+        end 
+        redirect to "/workdays"
     end 
 
-    get "/workdays/:id" do 
+    get '/workdays/:id' do 
         if logged_in?
-            @workday = Workday.find(params[:id])
+            @workday = Workday.find_by_id(params[:id])
             erb :'workdays/show'
         else 
             redirect to "/login"
         end 
     end 
 
-    get "/workdays/:id/edit" do 
+    get '/workdays/:id/edit' do 
         if logged_in?
             @workday = Workday.find_by_id(params[:id])
 
@@ -50,21 +61,25 @@ class WorkdayController < ApplicationController
         end 
     end 
 
-    patch "/workdays/:id" do 
+    patch '/workdays/:id' do 
         if logged_in?
+            
             if params[:shift_start] == "" || params[:shift_start_time] == "" || params[:shift_end] == "" || params[:shift_end_time] == ""
+                flash[:error] = "All fields need information"
                 redirect to "/workdays/#{params[:id]}/edit"
+                
 
             else 
             @workday = Workday.find_by_id(params[:id])
 
                 if @workday && (@workday.user_id == current_user.id)
 
-                    @workday.update(:shift_start => params[:shift_start])
-                    @workday.update(:shift_start_time => params[:shift_start_time])
-                    @workday.update(:shift_end => params[:shift_end])
-                    @workday.update(:shift_end_time => params[:shift_end_time])
-                    @workday.update(:notes => params[:notes])
+                    @workday.shift_start = params[:shift_start]
+                    @workday.shift_start_time = params[:shift_start_time]
+                    @workday.shift_end = params[:shift_end]
+                    @workday.shift_end_time = params[:shift_end_time]
+                    @workday.notes = params[:notes]
+                    @workday.save
 
                     redirect to "/workdays/#{@workday.id}"
 
@@ -81,9 +96,19 @@ class WorkdayController < ApplicationController
     end 
 
     delete "/workdays/:id/delete" do 
-        @workday = Workday.find_by_id(params[:id])
-        @workday.delete
-        redirect to "/workdays"
+        if logged_in?
+            @workday = Workday.find_by_id(params[:id])
+            if @workday && (@workday.user_id == current_user.id)
+                @workday.delete
+                flash[:success] = "You successfully deleted the workday"
+                redirect to "/workdays"
+            else 
+                flash[:error] = "You don't have permission to delete this workday"
+                redirect to "/workdays"
+            end 
+        else 
+            redirect to "/login"
+        end 
     end 
 
 

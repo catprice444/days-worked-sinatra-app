@@ -3,7 +3,7 @@
 <h1>Edit</h1>
 
 <form action="/workdays/<%= @workday.id %>" method="post">
-    <input id="hidden" type="hidden" name="_method" value="PATCH">
+    <input id="hidden" type="hidden" name="_method" value="patch">
     <h3>Shift Start Day: <input type="date" value= "<%=@workday.shift_start%>"></h3>
     <h3>Shift Start Time: <input type="time" value="<%=@workday.shift_start_time%>"></h3>
     <br>
