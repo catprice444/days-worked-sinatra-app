@@ -15,7 +15,8 @@ class UserController < ApplicationController
             session[:user_id] = @user.id
             redirect to "/workdays"
         else 
-            redirect to "/signup"
+            flash[:error] = "Invalid username/ password. Please enter correct information or visit sign-up page"
+            redirect to "/login"
         end 
     end 
 
@@ -29,6 +30,7 @@ class UserController < ApplicationController
 
     post "/signup" do 
         if params[:username] == "" || params[:password] == ""
+            flash[:error] = "Both fields are required to sign up"
             redirect to "/signup"
         else 
             @user = User.new(:username => params[:username], :password => params[:password])
