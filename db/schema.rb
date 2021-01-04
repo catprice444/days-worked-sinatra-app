@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210104205850) do
+ActiveRecord::Schema.define(version: 20210104212856) do
 
   create_table "users", force: :cascade do |t|
     t.string "username"
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 20210104205850) do
     t.date    "shift_start"
     t.date    "shift_end"
     t.text    "notes"
-    t.time    "shift_start_time"
-    t.time    "shift_end_time"
+    t.string  "shift_start_time"
+    t.string  "shift_end_time"
   end
 
 end
