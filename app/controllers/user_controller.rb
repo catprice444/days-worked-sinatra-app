@@ -2,7 +2,7 @@ class UserController < ApplicationController
 
     get "/login" do 
         if !logged_in?
-            flash[:login] = "You are not logged in. Please enter your username and password"
+            flash[:login] = "Please enter your username and password"
             erb :'user/login'
         else 
             redirect to "/workdays"
@@ -41,6 +41,7 @@ class UserController < ApplicationController
     get "/logout" do 
         if logged_in?
             session.destroy
+            flash[:logout] = "You have successfully logged out"
             redirect to "/login"
         else 
             redirect to "/"
