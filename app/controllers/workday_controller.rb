@@ -27,7 +27,7 @@ class WorkdayController < ApplicationController
 
     get "/workdays/:id" do 
         if logged_in?
-            @workday = Workday.find_by_id(params[:id])
+            @workday = Workday.find(params[:id])
             erb :'workdays/show'
         else 
             redirect to "/login"
@@ -37,21 +37,47 @@ class WorkdayController < ApplicationController
     get "/workdays/:id/edit" do 
         if logged_in?
             @workday = Workday.find_by_id(params[:id])
-            erb :'workdays/edit'
+
+            if @workday && (@workday.user_id == current_user.id)
+                erb :'workdays/edit'
+            else 
+                flash[:error] = "You don't have permission to edit this workday"
+                redirect to "/workdays"
+            end 
+
         else 
             redirect to "/login"
         end 
     end 
 
     patch "/workdays/:id" do 
-        @workday = Workday.find_by_id(params[:id])
-        @workday.shift_start = params[:shift_start]
-        @workday.shift_end = params[:shift_end]
-        @workday.shift_start_time = params[:shift_start_time]
-        @workday.shift_end_time = params[:shift_end_time]
-        @workday.notes = params[:notes]
-        @workday.save
-        redirect to "/workdays/#{@workday.id}"
+        if logged_in?
+            if params[:shift_start] == "" || params[:shift_start_time] == "" || params[:shift_end] == "" || params[:shift_end_time] == ""
+                redirect to "/workdays/#{params[:id]}/edit"
+
+            else 
+            @workday = Workday.find_by_id(params[:id])
+
+                if @workday && (@workday.user_id == current_user.id)
+
+                    @workday.update(:shift_start => params[:shift_start])
+                    @workday.update(:shift_start_time => params[:shift_start_time])
+                    @workday.update(:shift_end => params[:shift_end])
+                    @workday.update(:shift_end_time => params[:shift_end_time])
+                    @workday.update(:notes => params[:notes])
+
+                    redirect to "/workdays/#{@workday.id}"
+
+                else 
+                    flash[:error] = "You don't have permission to update this workday"
+                    redirect to "/workdays"
+
+                end 
+            end 
+
+        else 
+            redirect to "/login"
+        end             
     end 
 
     delete "/workdays/:id/delete" do 

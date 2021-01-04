@@ -1,1 +1,16 @@
+<p class="error-message"><%= flash[:error] %></p>
+
 <h1>Edit</h1>
+
+<form action="/workdays/<%= @workday.id %>" method="post">
+    <input id="hidden" type="hidden" name="_method" value="PATCH">
+    <h3>Shift Start Day: <input type="date" value= "<%=@workday.shift_start%>"></h3>
+    <h3>Shift Start Time: <input type="time" value="<%=@workday.shift_start_time%>"></h3>
+    <br>
+    <h3>Shift End Day: <input type="date" value="<%=@workday.shift_end%>"></h3>
+    <h3>Shift End Time: <input type="time" value="<%=@workday.shift_end_time%>"></h3>
+    <br>
+    <h3>Notes: <input type="text" value="<%=@workday.notes%>"></h3>
+    <input type="submit" value="Submit">
+</form>
+

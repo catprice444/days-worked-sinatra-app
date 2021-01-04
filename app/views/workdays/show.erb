@@ -7,9 +7,21 @@
 <h3><u>Shift Start:</u> <%= @workday.shift_start %> @ <%= @workday.shift_start_time %></h3>
 <br>
 <h3><u>Shift End:</u> <%= @workday.shift_end %> @ <%= @workday.shift_end_time %></h3>
+<br>
+</br>
+
+<a href="/workdays/<%= @workday.id %>/edit">Edit</a>
+
+
+
+
 
 
 <br>
 </br>
 
-<a href="/workdays/<%= @workday.id %>/edit">Edit</a>
+<form method="post" action="/workdays/%=@workday.id%>/delete">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete">
+</form>
+
