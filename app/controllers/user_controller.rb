@@ -33,7 +33,7 @@ class UserController < ApplicationController
             flash[:error] = "Both fields are required to sign up"
             redirect to "/signup"
         else
-            @user = User.new(:username => params[:username], :password => params[:password])
+            @user = User.create!(:username => params[:username], :password => params[:password])
             @user.save
             session[:user_id] = @user.id
             redirect to "/workdays" 
