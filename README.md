@@ -12,7 +12,7 @@ Each user can:
 
 ## Install Instructions
 
-To begin using this app, clone the repo, run $ bundle install, $ rake db:migrate, and then $ shotgun
+To begin using this app, clone the repo, run `bundle install`, `rake db:migrate`, and then run `shotgun`.
 
 ## Contributors Guide
 
