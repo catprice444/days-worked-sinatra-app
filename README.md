@@ -5,9 +5,10 @@
 Here a user can create an account and then add the days they worked. Users will be able to see a list of all of the inputed workdays, however each person can only edit/ delete the workdays that belong to them. 
 
 Each user can:
-- View all of their workdays
-- Choose from their list of workdays to edit or create a new one
-- Input the appropriate dates(s) and times to reflect how long they worked and add a description
+- View all of the workdays
+- Choose from the list of workdays to edit
+- Create a new workday
+    - Input the appropriate dates and times to reflect how long they worked and add a description
 - Delete any of their inputed dates
 
 ## Install Instructions
