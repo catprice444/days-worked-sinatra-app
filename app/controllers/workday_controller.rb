@@ -27,7 +27,7 @@ class WorkdayController < ApplicationController
             redirect '/workdays/new'
 
         elsif (params[:shift_start] > params[:shift_end])
-            flash[:error] = "You cannot enter an end date before a start date"
+            flash[:error] = "Check dates"
             redirect '/workdays/new'
 
         else 
@@ -72,11 +72,13 @@ class WorkdayController < ApplicationController
                 params[:shift_end] == "" || params[:shift_end_time] == "" || params[:notes] == ""
                 flash[:error] = "All fields need information"
                 redirect "/workdays/#{params[:id]}/edit"
+            
             elsif (params[:shift_start] > params[:shift_end])
-                flash[:error] = "You cannot enter an end date before a start date"
+                flash[:error] = "Check dates"
                 redirect "/workdays/#{params[:id]}/edit"
             else 
             @workday = Workday.find_by_id(params[:id])
+
                 if @workday && (@workday.user_id == current_user.id)
                     @workday.update(:shift_start => params[:shift_start], :shift_end => params[:shift_end], 
                         :shift_start_time => params[:shift_start_time], :shift_end_time => params[:shift_end_time], 
@@ -87,6 +89,7 @@ class WorkdayController < ApplicationController
                     redirect '/workdays'
                 end 
             end 
+
         else 
             redirect '/login'
         end             
