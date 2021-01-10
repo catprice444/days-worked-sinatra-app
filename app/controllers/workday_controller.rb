@@ -22,8 +22,12 @@ class WorkdayController < ApplicationController
             flash[:error] = "Please login or sign up"
             redirect '/login'
 
-        elseif params[:shift_start] == "" || params[:shift_start_time] == "" || params[:shift_end] == "" || params[:shift_end_time] == ""
+        elsif params[:shift_start] == "" || params[:shift_start_time] == "" || params[:shift_end] == "" || params[:shift_end_time] == ""
             flash[:error] = "Fill in all fields to submit form"
+            redirect '/workdays/new'
+
+        elsif (params[:shift_start] > params[:shift_end])
+            flash[:error] = "You cannot enter an end date before a start date"
             redirect '/workdays/new'
 
         else 
@@ -68,6 +72,9 @@ class WorkdayController < ApplicationController
                 params[:shift_end] == "" || params[:shift_end_time] == "" || params[:notes] == ""
                 flash[:error] = "All fields need information"
                 redirect "/workdays/#{params[:id]}/edit"
+            elsif (params[:shift_start] > params[:shift_end])
+                flash[:error] = "You cannot enter an end date before a start date"
+                redirect "/workdays/#{params[:id]}/edit"
             else 
             @workday = Workday.find_by_id(params[:id])
                 if @workday && (@workday.user_id == current_user.id)
@@ -77,11 +84,11 @@ class WorkdayController < ApplicationController
                     redirect "/workdays/#{@workday.id}"
                 else 
                     flash[:error] = "You don't have permission to update this workday"
-                    redirect "/workdays"
+                    redirect '/workdays'
                 end 
             end 
         else 
-            redirect "/login"
+            redirect '/login'
         end             
     end 
 
