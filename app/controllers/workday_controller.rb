@@ -22,7 +22,8 @@ class WorkdayController < ApplicationController
             flash[:error] = "Please login or sign up"
             redirect '/login'
 
-        elsif params[:shift_start] == "" || params[:shift_start_time] == "" || params[:shift_end] == "" || params[:shift_end_time] == ""
+        elsif params[:shift_start] == "" || params[:shift_start_time] == "" || 
+                params[:shift_end] == "" || params[:shift_end_time] == "" || params[:notes] == ""
             flash[:error] = "Fill in all fields to submit form"
             redirect '/workdays/new'
 
